@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - master
+      - master 
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
-        working-directory: server
+        # working-directory: server
 
       - name: Install Dependencies for Server
         run: |
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-        working-directory: client
+        # working-directory: client
 
       - name: Install Dependencies for Client
         run: |
