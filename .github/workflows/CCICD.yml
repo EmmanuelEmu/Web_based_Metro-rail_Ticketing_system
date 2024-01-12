@@ -36,10 +36,10 @@ jobs:
           node-version: 16
         # working-directory: client
 
-      - name: Install Dependencies for Client
-        run: |
-          npm install
-        working-directory: client
+      # - name: Install Dependencies for Client
+      #   run: |
+      #     npm install
+      #   working-directory: client
 
       - name: Build Client
         run: |
