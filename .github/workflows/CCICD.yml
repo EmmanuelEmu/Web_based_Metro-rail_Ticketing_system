@@ -1,61 +1,59 @@
-name: Build & deploy
+name: CI/CD
+
 on:
   push:
     branches:
       - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Installing Node.js
+      - name: Setup Node.js for Server
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+        working-directory: server
+
+      - name: Install Dependencies for Server
+        run: |
+          npm install
+        working-directory: server
+
+      - name: Build Server
+        run: |
+          npm run build
+        working-directory: server
+
+      - name: Setup Node.js for Client
         uses: actions/setup-node@v3
         with:
           node-version: 16
+        working-directory: client
 
-      - name: Installing NPM packages
-        run: npm ci
+      - name: Install Dependencies for Client
+        run: |
+          npm install
+        working-directory: client
 
-      - name: Building project
-        run: npm run build
-
-      - name: Running tests
-        run: npm run test
-
-      - name: Uploading production-ready build files
-        uses: actions/upload-artifact@v2
-        with:
-          name: production-files
-          path: ./build
+      - name: Build Client
+        run: |
+          npm run build
+        working-directory: client
 
   deploy:
-    name: Deploy
-    needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+
+    needs: build
 
     steps:
-      - name: Downloading artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: production-files
-          path: ./build
-
-      - name: Deploying to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-
-          
-
+      - name: Deploy to Production
+        run: |
+          # Your deployment script or commands go here
+        env:
+          SERVER_PATH: ${{ github.workspace }}/server
+          CLIENT_PATH: ${{ github.workspace }}/client
