@@ -8,9 +8,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    age: {
+    NID: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
+    },
+    mobile:{
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
+    },
+    email:{
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
+    },
+    password:{
+      type: DataTypes.STRING,
+      allowNull: false
     },
   });
 

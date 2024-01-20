@@ -6,6 +6,8 @@ const userRouter = Router();
 
 userRouter.post("/user", async (req, res)=>{
     const singleUserDetails = req.body;
+    const {NID} = req.body
+    console.log(req.body)
     await User.create(singleUserDetails);
     res.status(200).json(singleUserDetails);
 })
