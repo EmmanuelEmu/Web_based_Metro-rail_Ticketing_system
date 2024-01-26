@@ -1,35 +1,23 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Login from "./Components/login/login";
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
-import Registration from "./Components/registration/registration";
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
-  // const handhleRegistration = () => {
-  //   setRegistration(!registration);
-  // };
-
-  // const handleButtonClick = (componentSetter)=>{
-  //     componentSetter((previsibility)=>
-  //         !previsibility
-  //     )
-  // }
-
   return (
     <div className="App">
-      {/* <Login/> */}
-      {/* <Registration/> */}
-      {/* <button onClick={()=>{handleButtonClick(setLogin)}}>Login</button> */}
-      {/* <button onClick={handhleLogin}>Login</button>
-      {login && <Login />} */}
-      {/* <button onClick={()=>{handleButtonClick(setRegistration)}}>Registration</button>
-      {registration && <Registration />} */}
-      <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/registration" element={<Registration/>}/>415
-      </Routes>
-      </BrowserRouter>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
 }
