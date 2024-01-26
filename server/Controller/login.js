@@ -1,10 +1,7 @@
-const testLogin = (req, res) =>{
-    const shouldShowComponent = true;
-    if (shouldShowComponent) {
-        res.status(200).json({ message: 'Component can be shown' });
-      } else {
-        res.status(403).json({ message: 'Access denied' });
-      }
-}
+const testLogin = (req, res) => {
+  const db = require("../models");
+  const sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
+  db.query(sql, [req.body.email])
+};
 
-module.exports = {testLogin};
+module.exports = { testLogin };
