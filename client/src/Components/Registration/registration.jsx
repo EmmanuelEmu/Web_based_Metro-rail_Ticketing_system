@@ -291,11 +291,10 @@ const Registration = () => {
   return (
     <div>
       <div
-        class="min-h-screen py-40"
-        style={{ backgroundImage: "linear-gradient(115deg, #9F7AEA, #FEE2FE)" }}
+        class="min-h-screen py-40 backgroundImage"
       >
         <div class="container mx-auto">
-          <div class="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+          <div class="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden outline outline-offset-2 outline-green-800">
             <div class="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center sideImage">
               <div class="flex flex-col align-bottom">
                 <h1 class="text-white text-3xl mb-3">Welcome</h1>

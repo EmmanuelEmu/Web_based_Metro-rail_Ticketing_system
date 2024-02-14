@@ -95,7 +95,7 @@ const Login = () => {
     <div>
       <section class="bg-gray-50 min-h-screen flex items-center justify-center h-14 bg-gradient-to-r from-cyan-500 to-blue-500 backgroundImage">
         {/* login container */}
-        <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-full p-5 items-center">
+        <div class="bg-gray-100 flex rounded-2xl shadow-2xl max-w-full p-5 items-center outline outline-offset-2 outline-gray-500">
           {/* form  */}
           <div class="md:w-1/2 px-8 md:px-16">
             <h2 class="font-bold text-2xl text-[#002D74]">Login</h2>
