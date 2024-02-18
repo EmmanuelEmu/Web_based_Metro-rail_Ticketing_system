@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import control from "../../images/assets/control.png";
-import metro_logo from "../../images/assets/metro_logo.png"
+import metro_logo from "../../images/assets/metro_logo.png";
 import logo from "../../images/assets/logo.png";
 import Chart_fill from "../../images/assets/Chart_fill.png";
 import Chat from "../../images/assets/Chat.png";
@@ -12,18 +12,25 @@ import Folder from "../../images/assets/Folder.png";
 import Settings from "../../images/assets/Setting.png";
 import Account from "../Account/account";
 import Login from "../Login/login";
+import { FaWpforms } from "react-icons/fa";
+import { RxDashboard } from "react-icons/rx";
+import { MdSchedule } from "react-icons/md";
+import { RiInboxArchiveLine, RiAccountBoxLine } from "react-icons/ri";
+import { IoSettingsOutline, IoSearch } from "react-icons/io5";
+import { MdOutlineContactSupport } from "react-icons/md";
+import Dashboard from "../Dashboard/dashboard";
 
 const HomePage = () => {
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: "Dashboard", src: Chart_fill },
-    { title: "Inbox", src: Chat },
-    { title: "Accounts", src: User, gap: true },
-    { title: "Schedule ", src: Calendar },
-    { title: "Search", src: Search },
-    { title: "Analytics", src: Chart },
-    { title: "Files ", src: Folder, gap: true },
-    { title: "Setting", src: Settings },
+    { title: "Dashboard", src: <RxDashboard size={24} /> },
+    { title: "Inbox", src: <RiInboxArchiveLine size={24} /> },
+    { title: "Accounts", src: <RiAccountBoxLine size={24} />, gap: true },
+    { title: "Schedule ", src: <MdSchedule size={24} /> },
+    { title: "Search", src: <IoSearch size={24} /> },
+    { title: "Apply", src: <FaWpforms size={24} /> },
+    { title: "Setting", src: <IoSettingsOutline size={24} /> },
+    { title: "Contact Us", src: <MdOutlineContactSupport size={24} />, gap: true},
   ];
 
   const [menuItem, setMenuItem] = useState("");
@@ -70,13 +77,15 @@ const HomePage = () => {
               <li
                 key={index}
                 className={`flex rounded-md p-2 cursor-pointer hover:bg-blue-500 bg-opacity-5 text-gray-300 text-sm items-center gap-x-4 ${
-                  Menu.gap ? "mt-9" : "mt-2"
-                } ${index === 0 && "bg-light-white"}`}
+                  Menu.gap ? "mt-14" : "mt-2"
+                }
+                ${Menu.gap && Menu.title === "Contact Us" ? "mt-40": "mt-2"}
+                ${index === 0 && "bg-light-white"}`}
                 onClick={(e) => {
                   handleOnclick(e);
                 }}
               >
-                <img src={Menu.src} />
+                {Menu.src}
                 <span
                   className={`${!open && "hidden"} origin-left duration-200`}
                 >
@@ -87,7 +96,8 @@ const HomePage = () => {
           </ul>
         </div>
         <div className="h-screen flex-1 p-7">
-          {menuItem === "Accounts" && <Account/>}
+          {menuItem === "Accounts" && <Account />}
+          {menuItem ==="Dashboard" && <Dashboard/>}
         </div>
       </div>
     </div>
