@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 import control from "../../images/assets/control.png";
 import metro_logo from "../../images/assets/metro_logo.png";
-import logo from "../../images/assets/logo.png";
-import Chart_fill from "../../images/assets/Chart_fill.png";
-import Chat from "../../images/assets/Chat.png";
-import User from "../../images/assets/User.png";
-import Calendar from "../../images/assets/Calendar.png";
-import Search from "../../images/assets/Search.png";
-import Chart from "../../images/assets/Chart.png";
-import Folder from "../../images/assets/Folder.png";
-import Settings from "../../images/assets/Setting.png";
 import Account from "../Account/account";
-import Login from "../Login/login";
 import { FaWpforms } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { MdSchedule } from "react-icons/md";
@@ -19,8 +9,16 @@ import { RiInboxArchiveLine, RiAccountBoxLine } from "react-icons/ri";
 import { IoSettingsOutline, IoSearch } from "react-icons/io5";
 import { MdOutlineContactSupport } from "react-icons/md";
 import Dashboard from "../Dashboard/dashboard";
+import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const objString = params.get('param1');
+  console.log(objString);
+
+
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: "Dashboard", src: <RxDashboard size={24} /> },
@@ -96,7 +94,7 @@ const HomePage = () => {
           </ul>
         </div>
         <div className="h-screen flex-1 p-7">
-          {menuItem === "Accounts" && <Account />}
+          {menuItem === "Accounts" && <Account userData = {objString}/>}
           {menuItem ==="Dashboard" && <Dashboard/>}
         </div>
       </div>

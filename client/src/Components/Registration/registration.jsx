@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dayjs from 'dayjs';
 import { FaEyeSlash, FaEye } from "react-icons/fa6";
 import { MdError } from "react-icons/md";
 import "./registration.scss";
@@ -7,7 +8,12 @@ import { basic_eye } from "react-icons-kit/linea/basic_eye";
 import { basic_eye_closed } from "react-icons-kit/linea/basic_eye_closed";
 import { arrows_exclamation } from "react-icons-kit/linea/arrows_exclamation";
 import { arrows_circle_check } from "react-icons-kit/linea/arrows_circle_check";
+// import DatePicker from "react-datepicker";
 
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -20,6 +26,7 @@ const Registration = () => {
   const [nid, setNID] = useState();
   const [mobile, setMobile] = useState();
   const [email, setEmail] = useState("");
+  const [dob, setDob] = React.useState(dayjs(''));
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -40,8 +47,15 @@ const Registration = () => {
     const number = new RegExp("(?=.*[0-9])");
     const special = new RegExp("(?=.*[!@#$%^&*])");
     const length = new RegExp("(?=.{8,})");
-    
-    console.log(value, lowerValidated, upperValidated, numberValidated, specialValidated, lengthValidated);
+
+    console.log(
+      value,
+      lowerValidated,
+      upperValidated,
+      numberValidated,
+      specialValidated,
+      lengthValidated
+    );
     if (lower.test(value)) {
       setLowerValidated(true);
     } else {
@@ -68,8 +82,13 @@ const Registration = () => {
       setLengthValidated(false);
     }
 
-
-    console.log(lowerValidated, upperValidated, numberValidated, specialValidated, lengthValidated);
+    console.log(
+      lowerValidated,
+      upperValidated,
+      numberValidated,
+      specialValidated,
+      lengthValidated
+    );
 
     // if (
     //   lowerValidated &&
@@ -78,19 +97,31 @@ const Registration = () => {
     //   specialValidated &&
     //   lengthValidated
     // ) {
-      
+
     //   setPassOK(true);
     // }
   };
 
   useEffect(() => {
     // Check all validations and setPassOK in useEffect
-    if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
+    if (
+      lowerValidated &&
+      upperValidated &&
+      numberValidated &&
+      specialValidated &&
+      lengthValidated
+    ) {
       setPassOK(true);
     } else {
       setPassOK(false);
     }
-  }, [lowerValidated, upperValidated, numberValidated, specialValidated, lengthValidated]);
+  }, [
+    lowerValidated,
+    upperValidated,
+    numberValidated,
+    specialValidated,
+    lengthValidated,
+  ]);
 
   //handle hooks
 
@@ -169,7 +200,8 @@ const Registration = () => {
     if (!email.trim()) {
       errors.email = "Please enter your email.";
     } else if (!emailRegex.test(email)) {
-      errors.email = "Invalid email. Please enter your email with correct format";
+      errors.email =
+        "Invalid email. Please enter your email with correct format";
     }
     if (!password.trim()) {
       errors.password = "Please enter your password.";
@@ -201,28 +233,27 @@ const Registration = () => {
     }
     const handlePostObject = async (data) => {
       try {
-        const response = await fetch('http://localhost:5000/user', {
-          method: 'POST',
+        const response = await fetch("http://localhost:5000/user", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         });
-  
+
         if (response.ok) {
-          console.log('Object sent successfully!');
+          console.log("Object sent successfully!");
           // Handle success, if needed
         } else {
-          console.error('Failed to send object:', response.statusText);
+          console.error("Failed to send object:", response.statusText);
           // Handle error, if needed
         }
       } catch (error) {
-        console.error('Error sending object:', error.message);
+        console.error("Error sending object:", error.message);
         // Handle error, if needed
       }
     };
 
-    
     const userData = {
       firstName: fName,
       lastName: lName,
@@ -236,9 +267,6 @@ const Registration = () => {
     // Your submission logic here
     console.log("Form submitted successfully!");
   };
-
-
-
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -286,13 +314,11 @@ const Registration = () => {
   //     console.log(formErrors);
   //   }
   // }, [formErrors]);
-  console.log(fName, lName, nid, mobile, email, password, confirmPassword);
+  console.log(fName, lName, nid, mobile, email, dob.$d, password, confirmPassword);
 
   return (
     <div>
-      <div
-        class="min-h-screen py-40 backgroundImage"
-      >
+      <div class="min-h-screen py-40 backgroundImage">
         <div class="container mx-auto">
           <div class="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden outline outline-offset-2 outline-green-800">
             <div class="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center sideImage">
@@ -383,6 +409,20 @@ const Registration = () => {
                     class="border border-gray-400 py-1 px-2 w-full"
                     required
                   />
+                </div>
+                <div class="mt-5">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={["DatePicker"]}>
+                      <DatePicker
+                        label="Enter your date of birth"
+                        className="border border-gray-400 py-1 px-2 w-full"
+                        value={dob}
+                        onChange={(date) => {
+                          setDob(date)
+                        }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
                 </div>
                 <div class="mt-5">
                   <input

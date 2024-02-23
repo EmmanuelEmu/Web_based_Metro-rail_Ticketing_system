@@ -3,6 +3,7 @@ import "./login.scss";
 import { Link, Navigate } from "react-router-dom";
 import sideImage from "../../images/bg.webp";
 import { FaEyeSlash, FaEye } from "react-icons/fa6";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -11,6 +12,7 @@ const Login = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [invalidFlag, setInvalidFlag] = useState(false);
 
   const handlePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
@@ -61,7 +63,7 @@ const Login = () => {
       //     password,
       //   });
       //   console.log(response);
-      const data = {email, password};
+      const data = { email, password };
       console.log(data);
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
@@ -70,13 +72,21 @@ const Login = () => {
         },
         body: JSON.stringify(data),
       })
-      .then(res =>res.json())
-      .then(data => {
-        if (data === "success") {
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
             // Redirect to homepage or perform navigation here
-            window.location.href = "/homepage"; // or any other navigation method
+            const userData = JSON.stringify(data.data);
+            window.location.href = `/homepage?param1=${encodeURIComponent(userData)}`; // or any other navigation method
+          } else {
+            setInvalidFlag(true);
+            console.log("Invalid email or password");
+            toast.error("Invalid email or password", {
+              toastId: "invalid-login",
+            });
+            return <ToastContainer />;
           }
-      })
+        });
 
       if (response.ok) {
         console.log("Object sent successfully!");
@@ -192,6 +202,19 @@ const Login = () => {
                 <Link to="/registration">Register</Link>
               </button>
             </div>
+            {invalidFlag && (
+              <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-sky-500/100 p-4 rounded shadow-md">
+                <p className="text-white-500">
+                  Invalid email or password. Please try again.
+                </p>
+                <button
+                  onClick={() => setInvalidFlag(false)}
+                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                >
+                  Close
+                </button>
+              </div>
+            )}
           </div>
 
           {/* <!-- image --> */}

@@ -23,6 +23,7 @@ const testLogin = (req, res) => {
     const query = "SELECT * FROM users WHERE email = ?";
     const email = req.body.email; // Example email to query
 
+    console.log(query);
     // Execute the query
     connection.query(query, [email], (err, results) => {
       // Release the connection back to the pool
@@ -40,7 +41,15 @@ const testLogin = (req, res) => {
         console.log("Name: " + user.firstName + " " + user.lastName);
         console.log("Email:", user.email);
         console.log("Password:", user.password);
-        return res.json("success");
+        if(user.password === req.body.password){
+          return res.json({
+            'status' : "success",
+            'data': user
+          });
+        } else{
+          return res.json("failed");
+        }
+        
       } else {
         console.log("User not found");
       }

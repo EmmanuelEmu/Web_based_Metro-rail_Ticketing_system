@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Account = () => {
+const Account = (props) => {
+    console.log(props.userData);
     return (
         <div>
            <h1>This is account section</h1>

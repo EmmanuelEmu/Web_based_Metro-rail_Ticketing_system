@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    picture:{
+      type: DataTypes.BLOB,
+      allowNull: true
+    },
   });
 
   return User;
