@@ -12,12 +12,12 @@ import Dashboard from "../Dashboard/dashboard";
 import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
-
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const objString = params.get('param1');
-  console.log(objString);
-
+  const encodedUserData = params.get("param1");
+  const decodedUserDataString = decodeURIComponent(encodedUserData);
+  const userData = JSON.parse(decodedUserDataString);
+  console.log(userData);
 
   const [open, setOpen] = useState(true);
   const Menus = [
@@ -28,7 +28,11 @@ const HomePage = () => {
     { title: "Search", src: <IoSearch size={24} /> },
     { title: "Apply", src: <FaWpforms size={24} /> },
     { title: "Setting", src: <IoSettingsOutline size={24} /> },
-    { title: "Contact Us", src: <MdOutlineContactSupport size={24} />, gap: true},
+    {
+      title: "Contact Us",
+      src: <MdOutlineContactSupport size={24} />,
+      gap: true,
+    },
   ];
 
   const [menuItem, setMenuItem] = useState("");
@@ -77,7 +81,7 @@ const HomePage = () => {
                 className={`flex rounded-md p-2 cursor-pointer hover:bg-blue-500 bg-opacity-5 text-gray-300 text-sm items-center gap-x-4 ${
                   Menu.gap ? "mt-14" : "mt-2"
                 }
-                ${Menu.gap && Menu.title === "Contact Us" ? "mt-40": "mt-2"}
+                ${Menu.gap && Menu.title === "Contact Us" ? "mt-40" : "mt-2"}
                 ${index === 0 && "bg-light-white"}`}
                 onClick={(e) => {
                   handleOnclick(e);
@@ -94,8 +98,8 @@ const HomePage = () => {
           </ul>
         </div>
         <div className="h-screen flex-1 p-7">
-          {menuItem === "Accounts" && <Account userData = {objString}/>}
-          {menuItem ==="Dashboard" && <Dashboard/>}
+          {menuItem === "Accounts" && <Account userData={userData} />}
+          {menuItem === "Dashboard" && <Dashboard />}
         </div>
       </div>
     </div>

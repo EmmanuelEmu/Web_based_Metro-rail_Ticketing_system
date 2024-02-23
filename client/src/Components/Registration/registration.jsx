@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { FaEyeSlash, FaEye } from "react-icons/fa6";
 import { MdError } from "react-icons/md";
 import "./registration.scss";
@@ -27,6 +27,7 @@ const Registration = () => {
   const [mobile, setMobile] = useState();
   const [email, setEmail] = useState("");
   const [dob, setDob] = React.useState(dayjs(''));
+  const [imageFile, setImageFile] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -159,6 +160,11 @@ const Registration = () => {
 
   const handleValidation = (event, setter, customErrorMessage) => {
     // console.log(typeof(event.target.id));
+    if(event.target.id === "imageFile"){
+      console.log(event.target.files[0]);
+      const image = event.target.files[0]
+      setImageFile(image)
+    }
     if (event.target.id === "password") {
       setPassVal(true);
       handleChange(event.target.value);
@@ -212,6 +218,9 @@ const Registration = () => {
     if (!confirmPassword.trim()) {
       errors.confirmPassword = "Please confirm the password";
     }
+    if (!imageFile) {
+      errors.imageFile = "Please enter your image";
+    }
 
     console.log(errors);
     console.log(Object.keys(errors));
@@ -259,8 +268,10 @@ const Registration = () => {
       lastName: lName,
       NID: nid,
       mobile: mobile,
+      dob: dob,
       email: email,
       password: password,
+      picture: imageFile
     };
     handlePostObject(userData);
 
@@ -314,7 +325,8 @@ const Registration = () => {
   //     console.log(formErrors);
   //   }
   // }, [formErrors]);
-  console.log(fName, lName, nid, mobile, email, dob.$d, password, confirmPassword);
+  console.log(fName, lName, nid, mobile, email, dob, imageFile, password, confirmPassword);
+  // console.log(`${dob.$D}.${dob.$M}.${dob.$y}`);
 
   return (
     <div>
@@ -418,7 +430,7 @@ const Registration = () => {
                         className="border border-gray-400 py-1 px-2 w-full"
                         value={dob}
                         onChange={(date) => {
-                          setDob(date)
+                          setDob(date);
                         }}
                       />
                     </DemoContainer>
@@ -578,6 +590,25 @@ const Registration = () => {
                   >
                     {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
+                </div>
+                <div class="mt-5 flex items-center">
+                  <label htmlFor="fileInput" className="mr-2">
+                    Select an image:
+                  </label>
+                  <input
+                    type="file"
+                    id="imageFile"
+                    accept=".jpg, .png"
+                    onChange={(event)=>{
+                      handleValidation(
+                        event,
+                        setImageFile,
+                        "Please enter you image"
+                      )
+                    }}
+                    className="border border-gray-400 py-1 px-2 w-80 pr-10"
+                    required
+                  />
                 </div>
                 <div class="mt-5">
                   <label class="flex items-center">

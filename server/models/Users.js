@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0,
       allowNull: false
     },
+    dob:{
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
     email:{
       type: DataTypes.STRING,
       allowNull: false

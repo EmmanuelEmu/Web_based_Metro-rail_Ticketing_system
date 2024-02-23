@@ -74,8 +74,10 @@ const Login = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           if (data.status === "success") {
             // Redirect to homepage or perform navigation here
+
             const userData = JSON.stringify(data.data);
             window.location.href = `/homepage?param1=${encodeURIComponent(userData)}`; // or any other navigation method
           } else {
